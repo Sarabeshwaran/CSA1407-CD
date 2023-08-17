@@ -1,0 +1,52 @@
+Input Source Program:
+
+ #include <stdio.h>
+ int main() 
+ {    
+      int number1, number2, sum;
+ printf("Enter two integers: ");
+ scanf("%d %d", &number1, &number2);
+ sum = number1 + number2;      
+      printf("%d + %d = %d", number1, number2, sum);
+  return 0;
+ }
+
+Lex Program:
+
+%{
+int nchar, nword, nline;
+%}
+%%
+\n { nline++; nchar++; }
+[^ \t\n]+ { nword++, nchar += yyleng; }
+. { nchar++; }
+%%
+int yywrap(void) {
+return 1;
+}
+int main(int argc, char *argv[]) {
+yyin = fopen(argv[1], "r");
+yylex();
+printf("Number of characters = %d\n", nchar);
+printf("Number of words = %d\n", nword);
+printf("Number of lines = %d\n", nline);
+fclose(yyin);
+}
+
+Output: 
+
+C:\Users\welcome\Desktop\Lex>set path=C:\Program Files\GnuWin32\bin
+
+C:\Users\welcome\Desktop\Lex>flex 1.l.txt
+
+C:\Users\welcome\Desktop\Lex>set path=C:\MinGW\bin
+
+C:\Users\welcome\Desktop\Lex>gcc lex.yy.c
+
+C:\Users\welcome\Desktop\Lex>a.exe
+1.c
+^Z
+Number of characters = 4
+Number of words = 1
+Number of lines = 1
+
