@@ -1,0 +1,20 @@
+INPUT:
+
+%%
+[0-9]+ {printf("\nValid digit \n");} 
+.* printf("\nInvalid digit\n");
+%%
+int yywrap(){}
+int main()											
+{
+yylex();
+return 0;
+}
+
+OUTPUT:
+
+23
+Valid digit
+
+h56
+Invalid digit
